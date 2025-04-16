@@ -29,14 +29,19 @@ class Statistics
   end
 
   def mode
-    sorted_mode = @numbers.sort
-    mid_index = sorted_mode.size / 2.0
-    if sorted_mode.size.even?
-      [(sorted_mode[mid_index - 1] + sorted_mode[mid_index]) / 2]
-    else
-      Integer(mid_index)
-      [sorted_mode[0]]
+    hash = Hash.new(0)
+    @numbers.each { |number| hash[number] += 1}
+
+    max_key = []
+    hash.each do |key, val|
+      if max_key.empty?
+        max_key << key
+      elsif hash[max_key[0]] < hash[key]
+        max_key[0] = key
+      end
     end
+    
+    max_key
   end
 
   def even_numbers
