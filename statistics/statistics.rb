@@ -30,18 +30,13 @@ class Statistics
 
   def mode
     hash = Hash.new(0)
-    @numbers.each { |number| hash[number] += 1}
+    @numbers.each { |number| hash[number] += 1 }
 
-    max_key = []
-    hash.each do |key, val|
-      if max_key.empty?
-        max_key << key
-      elsif hash[max_key[0]] < hash[key]
-        max_key[0] = key
-      end
-    end
+    reverse_hash = Hash.new { |h, k| h[k] = [] }
+    hash.each { |key, val| reverse_hash[val] << key }
     
-    max_key
+    reverse_hash.sort[-1][1]
+
   end
 
   def even_numbers
