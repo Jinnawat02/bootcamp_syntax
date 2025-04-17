@@ -26,10 +26,15 @@ class BookService
   end
 
   def delete_book(id)
+    found_book = @repository.find_by_id(id)
+    return nil if found_book.nil?
+
     @repository.delete(id)
   end
 
   def list_books
+    return nil if @repository.all.empty?
+
     @repository.all.map(&:info)
   end
 end
